@@ -1,0 +1,54 @@
+\documentclass[]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[a4paper,left=10mm,right=10mm,bottom=10mm,top=10mm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{array,color}
+\newcommand{\image}[2]{\begin{figure}[H]\includegraphics[scale = #1]{#2}\end{figure}}
+\usepackage{xcolor} % 用于着色
+\usepackage{listings} % 用于排版代码
+\lstset{
+basicstyle=\ttfamily\small, % 代码字体大小、样式
+keywordstyle=\color{blue}, % 关键词颜色
+commentstyle=\color{green!40!black}, % 注释颜色
+showstringspaces=false, % 字符串中空格显示为下划线
+stringstyle=\color{red!80!black}, % 字符串颜色
+numbers=left, % 行号位置：左侧
+numberstyle=	iny\color{gray}, % 行号字体大小、样式
+stepnumber=1, % 行号递增步长
+breaklines=true, % 自动折行
+backgroundcolor=\color{lightgray!20}, % 代码块背景色
+frame=single, % 代码块边框
+tabsize=4, % 缩进长度
+captionpos=b, % 标题位置：底部
+language=C, % 代码语言
+}
+%opening
+\title{计算机科学中的数学基础Exercise20}
+\author{陈昱衡 521021910939}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Basics12}
+\image{0.5}{2023-05-08-17-40-51.png}
+借鉴7.5节中例4的思想方法，我们可以将本题转换为\textbf{有多少个由+1和-1组成的数列<$a_1,a_2,\cdots,a_{2n}$>}，
+使得$a_1+a_2+\cdots+a_{2n}=0$。\par 
+其中，$a_i=1$表明将数字$i$放在第一行，$a_i=-1$表明将数字$i$放在第二行。\par
+根据题意，为了维持一行中相邻数字的大小关系以及上下相邻的两个数字的大小关系，我们可以得到以下的约束条件：
+\begin{equation}
+    \sum_{i=1}{k(k\le n)}a_i \ge 0
+\end{equation}
+所以，本题可以转换为教材中的图形表示，
+\image{0.4}{2023-05-10-16-53-53.png}
+所以，借鉴教材中的推到过程，不妨令结果为$C_{n}$，则有：
+\begin{align}
+    C_{n} &= C_0C_{n-1} + C_1C_{n-2} +\cdots+C_{n-1}C_{0} \\
+    C_{n} &= \sum_{k}C_kC_{n-1-k} + [n=0]\\
+    C(z) = C(z) \cdot zC(z)\\
+\end{align}
+\par 
+所以本题结果为卡特兰数$C_{n}$。
+
+\end{document}

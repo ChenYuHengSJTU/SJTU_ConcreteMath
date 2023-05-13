@@ -1,0 +1,141 @@
+\documentclass[]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[a4paper,left=10mm,right=10mm,bottom=10mm,top=10mm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{array,color}
+\newcommand{\image}[2]{\begin{figure}[H]\includegraphics[scale = #1]{#2}\end{figure}}
+\usepackage{xcolor} % 用于着色
+\usepackage{listings} % 用于排版代码
+\usepackage{mathabx}
+\usepackage{graphicx} 
+\lstset{
+basicstyle=\ttfamily\small, % 代码字体大小、样式
+keywordstyle=\color{blue}, % 关键词颜色
+commentstyle=\color{green!40!black}, % 注释颜色
+showstringspaces=false, % 字符串中空格显示为下划线
+stringstyle=\color{red!80!black}, % 字符串颜色
+numbers=left, % 行号位置：左侧
+numberstyle=	iny\color{gray}, % 行号字体大小、样式
+stepnumber=1, % 行号递增步长
+breaklines=true, % 自动折行
+backgroundcolor=\color{lightgray!20}, % 代码块背景色
+frame=single, % 代码块边框
+tabsize=4, % 缩进长度
+captionpos=b, % 标题位置：底部
+language=C, % 代码语言
+}
+%opening
+\title{计算机科学中的数学基础Exercise21}
+\author{陈昱衡 521021910939}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section*{Basics 14}
+\image{0.5}{2023-05-11-11-15-49.png}
+因为二项式
+\begin{align}
+    \binom{n}{k} &= \frac{n!}{k!(n-k)!}
+\end{align}
+所以按照指数生成函数的定义，原式可以展开为
+\begin{align}
+    \frac{g_n}{n!} &= -2\frac{g_{n-1}}{(n-1)!} + \sum_{k} \frac{g_{n-k}}{(n-k)!}\frac{g_k}{k!}
+\end{align}
+根据指数生成函数卷积的定义,有
+\begin{align}
+    G(z) &= -2z\times G(z) + G(z)^{2} + z
+\end{align}
+
+解方程得到
+\begin{align}
+    G(z) &= \frac{1+2z-\sqrt{1+4z^2}}{2}
+\end{align}
+
+对比卡特兰数，可以得到，$g_n$可以使用卡特兰数来表示，
+\begin{align}
+    g_{2n+1} &= 0\\
+    g_{2n} &= (-1)^n(2n)!C_{n-1}
+\end{align}
+
+\section*{Homework 21}
+\image{0.5}{2023-05-11-11-16-06.png}
+对于使用10美金和20美金凑出500美金的问题，我们有
+\begin{align}
+    10i+20j=500\\
+\end{align}
+由这种形式，可以想到卷积的定义，借用教材7.3节例4的结论，可以得到本题的生成函数为
+\begin{align}
+    G(z) &= \frac{1}{1-z^{10}}\frac{1}{1-z^{20}}
+\end{align}
+如果我们令
+\begin{align}
+    I &= 10i\\
+    J &= 10j \\
+\end{align}
+我们可以得到
+\begin{align}
+    I + 2J = 50\\
+\end{align}
+因此再次利用卷积，紧凑的生成函数
+\begin{align}
+    % \invhat{G}(z) &= \frac{1}{1-z}\frac{1}{1-z^2}
+    \check{G}(z) &= \frac{1}{1-z}\frac{1}{1-z^2}
+\end{align}
+
+\subsection*{利用部分分式确定所要求的方法数}
+
+对$\check{G}(z)$进行部分分式，过程如下：
+\begin{align}
+    \frac{1}{1-z}\frac{1}{1-z^2} &= \frac{A}{1-z} + \frac{B}{1-z^2} + \frac{C}{1+z}\\
+\end{align}
+有
+% \begin{align}
+    
+% \end{align}
+解得：
+\begin{gather*}
+    \left\{
+    \begin{aligned}
+        A &= \frac{1}{2}\\
+        B &= \frac{1}{4}\\
+        C &= \frac{1}{4}\\
+    \end{aligned}
+    \right.
+\end{gather*}
+故$\check{G}(z)$部分分式展开为
+\begin{align}
+    \check{G}(z) &= \frac{1}{2}\frac{1}{1-z} + \frac{1}{4}\frac{1}{1-z^2} + \frac{1}{4}\frac{1}{1+z}
+\end{align}
+根据指数生成函数的定义，可以得到
+\begin{align}
+    [z^n]\check{G}(z) &= \frac{1}{2} + \frac{1}{4} \times (-1)^n + \frac{1}{4}(n+1)\\
+    &= \frac{3}{4} + \frac{(-1)^n}{4} + \frac{n}{2}
+\end{align}
+
+故令$n=50$，有$$[z^{50}]\check{G}(z) = 26$$
+共26种给付方法.\par 
+
+\subsection*{利用与（7.39）类 似的方法确定所要求的方法数．}
+\image{0.3}{2023-05-12-15-32-02.png}
+根据7.39的方法，我们需要把分母凑成$(1-z^2)$的幂次形式，因此有
+\begin{align}
+    \check{G}(z) &= \frac{1}{1-z}\frac{1}{1-z^2} \\
+    &= \frac{1+z}{(1-z^2)^2}\\
+\end{align}
+根据$\frac{1}{1-z^2}$的生成函数，有
+\begin{align}
+    \check{G}(z) &= \frac{1+z}{(1-z^2)^2}\\
+    &= (z+1)(1+2z^2+3z^4 + \cdots)
+\end{align}
+因此，我们可以得到
+\begin{align}
+    [z^n]\check{G}(z) &= \lfloor \frac{n}{2} \rfloor + 1 \\
+\end{align}
+将$n=50$带入，有$\lfloor \frac{50}{2} \rfloor + 1 = 26$种给付方法。\par
+
+% $\reflectbox{$\hat{\reflectbox{$X$}}$}$
+% $\hat{\phantom{x}}$
+% $\widehat{x}$
+\end{document}
